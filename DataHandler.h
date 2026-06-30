@@ -60,7 +60,7 @@ public:
         out << "<div class='meter-box'><span>Usable Capacity</span><strong>" << packManager.MinCapacity() << " mAh</strong></div>\n";
         out << "<div class='meter-box'><span>Max Capacity Limit</span><strong>" << packManager.MaxCapacity() << " mAh</strong></div>\n";
         out << "<div class='meter-box'><span>Capacity Variance</span><strong>" << FormatDouble(variance) << "%</strong></div>\n";
-        out << "<div class='meter-box'><span>Total Internal Resistance</span><strong>" << FormatDouble(packManager.GetTotalResistance()) << " m&Omega;</strong></div>\n";
+        out << "<div class='meter-box'><span>Total Resistance</span><strong>" << FormatDouble(packManager.GetTotalResistance()) << " m&Omega;</strong></div>\n";
         out << "<div class='meter-box'><span>Resistance Variance</span><strong>" << FormatDouble(packManager.GetResistanceVariancePercentage()) << "%</strong></div>\n";
         return out.str();
     }
