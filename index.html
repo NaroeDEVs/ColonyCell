@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Pack Optimizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="ColonyCell logo.png" alt="ColonyCell" id="mainLogo" class="nav-logo">
+        </div>
+        <div class="nav-links">
+            <a href="#" id="navTool" class="active">Tool</a>
+            <a href="#" id="navFaq">FAQ</a>
+            <a href="#" id="navInfo">About</a>
+            <button id="themeToggle" class="theme-btn">Dark Mode</button>
+        </div>
+    </nav>
+
+    <div id="pageTool" class="main-container">
+        <div class="left-panel">
+            <div class="panel-section">
+                <h3>Configuration</h3>
+                <div class="input-grid">
+                    <div class="input-col"><label>Series (S)</label><input type="number" id="series" value="16"></div>
+                    <div class="input-col"><label>Parallel (P)</label><input type="number" id="parallel" value="5"></div>
+                    <div class="input-col"><label>Capacity Weight (%)</label><input type="number" id="wCap" value="80"></div>
+                    <div class="input-col"><label>Resistance Weight (%)</label><input type="number" id="wRes" value="20"></div>
+                    <div class="input-col"><label>Nominal Cell Voltage</label><input type="number" id="nomVolt" step="0.1" value="3.6"></div>
+                    <div class="input-col"><label>Maximum Cell Voltage</label><input type="number" id="maxVolt" step="0.1" value="4.2"></div>
+                    <div class="input-col full-width">
+                        <label>Output View Mode</label>
+                        <div class="view-toggle">
+                            <button id="btnCompact" class="view-btn active">Compact View</button>
+                            <button id="btnDetailed" class="view-btn">Detailed View</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons-row">
+                    <button id="runBtn" class="action-btn">Optimize Pack</button>
+                    <button id="demoBtn" class="action-btn demo-btn">Load Demo</button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3>Add Cells</h3>
+                <div class="manual-add-grid">
+                    <input type="number" id="cId" min="0" placeholder="ID (optional)">
+                    <input type="number" id="cCap" min="0" placeholder="Capacity (mAh)">
+                    <input type="number" id="cIr" min="0" step="any" placeholder="Resistance (m&Omega;)">
+                    <input type="text" id="cMfg" placeholder="Manufacturer (optional)">
+                    <input type="text" id="cCond" placeholder="Condition (optional)">
+                    <button id="addCellBtn" class="add-btn">Add Cell</button>
+                </div>
+                
+                <div class="bulk-upload">
+                    <span>- OR APPEND CSV -</span>
+                    <input type="file" id="csvFile" accept=".csv">
+                </div>
+                
+                <div class="cell-list-container">
+                    <div class="list-header">
+                        <span id="cellCount">Total: 0</span>
+                        <button id="clearAllBtn" class="clear-btn">Clear All</button>
+                    </div>
+                    <ul id="cellList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="summary-bar" id="summaryBox">
+                <div class="meter-box"><span>Status</span><strong>Waiting for input...</strong></div>
+            </div>
+            <div class="results-area" id="resultBox"></div>
+        </div>
+    </div>
+
+    <div id="pageFaq" class="main-container hidden">
+        <div class="content-page">
+            <h2>Frequently Asked Questions</h2>
+            <br>
+            
+            <h3>What is this tool actually for?</h3>
+            <p>If you're building a custom battery pack (like for an e-bike, powerwall, or RC project) using loose lithium cells, welding them together randomly is inefficient. Every single cell has slightly different health and capacity. This tool takes your cell test data and calculates the closest to absolute best way to arrange them so your final battery pack performs most efficiently.</p>
+            <br>
+
+            <h3>What if I don't know the internal resistance of my cells?</h3>
+            <p>Just set the Capacity Weight to 100% and Resistance Weight to 0% in the configuration. Leave the resistance fields blank (or at 0) when adding your cells, and the tool will completely ignore resistance, packing everything based purely on capacity.</p>
+            <br>
+
+            <h3>Why do I need to optimize my battery pack?</h3>
+            <p>A battery pack is only as strong as its weakest link (the weakest parallel group). If you accidentally group too many low-capacity cells together, that specific group will run out of juice first, and your Battery Management System (BMS) will shut off your whole battery early. By letting this app distribute the capacity evenly, you get maximum range and won't waste good energy.</p>
+            <br>
+
+            <h3>How do I use it?</h3>
+            <p>Follow steps:</p>
+            <ol style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                <li>Set up your pack size on the left panel (for example, 14 Series, 4 Parallel).</li>
+                <li>Add your tested cells. You can type them in manually, upload a CSV file from your spreadsheet, or just click "Load Demo" to see how it works.</li>
+                <li>Click <b>Optimize Pack</b>.</li>
+                <li>Look at the Results area. It gives you a blueprint of exactly which cell goes into which group so you can start spot-welding.</li>
+                <li class="red-text">!! NOTE !! : The optimization process may take a few moments depending on the number of cells and the specifications of your computer.</li>
+                <li class="red-text">!! NOTE !! : Some cells may not be used if they don't meet the criteria.</li>
+            </ol>
+            <br>
+
+            <h3>Why do we care about balancing internal resistance?</h3>
+            <p>In a parallel group, cells share the electrical load. If one cell has a much lower resistance than the ones next to it, it will do most of the heavy lifting. This makes it heat up faster and die sooner. Balancing the resistance ensures all cells share the work evenly, which is much safer and makes your pack last years longer.</p>
+            <br>
+
+            <h3>How should I format my CSV file?</h3>
+            <p>Save your spreadsheet using semicolons (<code>;</code>) as separators. The order for each row must be: <code>ID;Capacity;Resistance;Manufacturer;Condition</code>. Do not include a title/header row at the top. If you don't have some info (like Manufacturer), just leave it blank between the semicolons. Make sure the ID is a normal number.</p>
+            <br>
+
+            <h3>How does the math behind the scenes work?</h3>
+            <p>It runs in two stages. First, it uses a "greedy" algorithm to do a rough distribution based on how you set the weight sliders. After that, it runs a hill-climbing optimization, the algorithm simulates thousands of tiny cell swaps between your parallel groups until it finds the absolute mathematically tightest balance across the whole pack.</p>
+        </div>
+    </div>
+
+    <div id="pageInfo" class="main-container hidden">
+        <div class="content-page">
+            <h2>About the Project</h2>
+            <br>
+            <p>This is an open-source battery pack optimizer. It calculates the most efficient distribution of lithium-ion cells for custom battery packs. Traditional tools often ignore internal resistance, which leads to unbalanced parallel groups and shorter lifespan. This tool uses a C++ backend compiled to WebAssembly for fast processing directly in the browser.</p>
+            <br>
+            <p><b>Privacy & Security:</b> Because this tool utilizes WebAssembly, the optimization algorithm runs 100% locally on your own computer. Your battery data, custom configurations, and uploaded CSV files are processed entirely in your browser and are never uploaded, saved, or sent to any external server.</p>
+            <br>
+            <h3>About the Author</h3>
+            <p>I am Justas, an Informatics Engineering student at KTU. I developed this tool while building a custom electric bicycle (up to 90km range) using recycled laptop lithium-ion cells. The goal was to mathematically ensure the best possible range and pack longevity. My interests include system programming, security, and practical engineering solutions.</p>
+            <br>
+            <h3>Contacts</h3>
+            <p>Email: mercrypt@proton.me</p>
+            <p>GitHub: github.com/NaroeDEVs</p>
+            <p>Website: justasmerkis.me</p>
+        </div>
+    </div>
+
+    <script>
+        var Module = {
+            onRuntimeInitialized: function() {
+                window.isWasmReady = true;
+            }
+        };
+    </script>
+    <script src="optimizer.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
