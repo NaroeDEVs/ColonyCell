@@ -2,7 +2,7 @@ let cells = [];
 let globalIdCounter = 1;
 let lastCompactOutput = "";
 let lastDetailedOutput = "";
-let currentViewMode = 0; 
+let currentViewMode = 1;
 
 window.isWasmReady = window.isWasmReady || false;
 
@@ -314,8 +314,8 @@ if (logoContainer) {
         document.getElementById('nomVolt').value = "3.6";
         document.getElementById('maxVolt').value = "4.2";
 
-        currentViewMode = 0;
-        if (btnCompact) btnCompact.classList.add('active');
-        if (btnDetailed) btnDetailed.classList.remove('active');
+        currentViewMode = 1;
+        if (btnDetailed) btnDetailed.classList.add('active');
+        if (btnCompact) btnCompact.classList.remove('active');
     });
 }
