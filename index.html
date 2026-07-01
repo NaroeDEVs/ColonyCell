@@ -127,6 +127,16 @@
             <p>In a parallel group, cells share the electrical load. If one cell has a much lower resistance than the ones next to it, it will do most of the heavy lifting. This makes it heat up faster and die sooner. Balancing the resistance ensures all cells share the work evenly, which is much safer and makes your pack last years longer.</p>
             <br>
 
+            <h3>What do the summary metrics mean?</h3>
+            <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                <li><b>Pack Health:</b> A score showing how perfectly balanced your pack's capacity is. 100% means every single parallel group holds the exact same amount of energy.</li>
+                <li><b>Algorithm Improvement:</b> Shows how much better this optimized layout is compared to just randomly welding your cells together. This is the percentage of your battery's potential that the algorithm "rescued".</li>
+                <li><b>Usable Capacity:</b> The total capacity of your <i>weakest</i> parallel group. Your BMS will shut down the whole pack when the weakest group dies, so this is your true max capacity limit.</li>
+                <li><b>Expected Energy:</b> Measured in Watt-hours (Wh). This is your true energy storage (Usable Capacity &times; Nominal Pack Voltage) and the best number to use when calculating how much range your e-bike will get.</li>
+                <li><b>Resistance Variance:</b> Measures how closely matched the internal resistances of your groups are. A lower percentage is better—it means all groups will share the load equally and stay cool under high current.</li>
+            </ul>
+            <br>
+
             <h3>How should I format my CSV file?</h3>
             <p>Save your spreadsheet using semicolons (<code>;</code>) as separators. The order for each row must be: <code>ID;Capacity;Resistance;Manufacturer;Condition</code>. Do not include a title/header row at the top. If you don't have some info (like Manufacturer), just leave it blank between the semicolons. Make sure the ID is a normal number.</p>
             <br>

@@ -48,20 +48,25 @@ public:
         return ss.str();
     }
 
-    std::string GetSummaryHTML(const PackManager &packManager) {
+    std::string GetSummaryHTML(const PackManager &packManager, double naiveVariance) {
         std::ostringstream out;
         double variance = packManager.CalculateCapacityVariancePercentage();
-        double score = 100.0 - variance;
-        if (score < 0.0) score = 0.0;
-        if (score > 100.0) score = 100.0;
 
-        out << "<div class='meter-box'><span>Optimization Score</span><strong class='highlight'>" << FormatDouble(score) << "%</strong></div>\n";
-        out << "<div class='meter-box'><span>Expected Energy</span><strong>" << FormatDouble(packManager.CalculateTotalPackEnergy()) << " Wh</strong></div>\n";
+        // Calculate Pack Health
+        double health = 100.0 - variance;
+        if (health < 0.0) health = 0.0;
+        if (health > 100.0) health = 100.0;
+
+        // Calculate Algorithm Improvement
+        double improvement = naiveVariance - variance;
+        if (improvement < 0.0) improvement = 0.0;
+
+        out << "<div class='meter-box'><span>Pack Health</span><strong class='highlight'>" << FormatDouble(health) << "%</strong></div>\n";
+        out << "<div class='meter-box'><span>Algorithm Improvement</span><strong class='highlight'>+" << FormatDouble(improvement) << "%</strong></div>\n";
         out << "<div class='meter-box'><span>Usable Capacity</span><strong>" << packManager.MinCapacity() << " mAh</strong></div>\n";
-        out << "<div class='meter-box'><span>Max Capacity Limit</span><strong>" << packManager.MaxCapacity() << " mAh</strong></div>\n";
-        out << "<div class='meter-box'><span>Capacity Variance</span><strong>" << FormatDouble(variance) << "%</strong></div>\n";
-        out << "<div class='meter-box'><span>Total Resistance</span><strong>" << FormatDouble(packManager.GetTotalResistance()) << " m&Omega;</strong></div>\n";
+        out << "<div class='meter-box'><span>Expected Energy</span><strong>" << FormatDouble(packManager.CalculateTotalPackEnergy()) << " Wh</strong></div>\n";
         out << "<div class='meter-box'><span>Resistance Variance</span><strong>" << FormatDouble(packManager.GetResistanceVariancePercentage()) << "%</strong></div>\n";
+
         return out.str();
     }
 

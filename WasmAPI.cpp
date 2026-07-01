@@ -14,15 +14,22 @@ std::string OptimizePack(std::string csvData, int series, int parallel, double w
         return "ERROR|||Not enough batteries. You need " + std::to_string(series * parallel) + ".";
     }
 
+    PackManager naivePacks;
+    naivePacks.SetSize(series, parallel);
+    naivePacks.SetVoltages(nomV, maxV);
+    naivePacks.PackWithoutOptimization(AllBateries);
+    double naiveVariance = naivePacks.CalculateCapacityVariancePercentage();
+    // ---------------------------------------------------------------------
+
     PackManager allPacks;
     allPacks.SetSize(series, parallel);
     allPacks.SetVoltages(nomV, maxV);
     allPacks.SetOptimizationWeights(wCap / 100.0, wRes / 100.0);
-    
+
     allPacks.PackWithOptimization(AllBateries);
     allPacks.HillClimbOptimization();
 
-    std::string summary = dataHandler.GetSummaryHTML(allPacks);
+    std::string summary = dataHandler.GetSummaryHTML(allPacks, naiveVariance);
     std::string compact = dataHandler.CompactCellOutputHTML(allPacks);
     std::string detailed = dataHandler.DetailedCellOutputHTML(allPacks);
 
