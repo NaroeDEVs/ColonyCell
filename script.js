@@ -271,8 +271,8 @@ if (runBtn) {
                     if (summaryBox) summaryBox.innerHTML = parts[0];
                     lastCompactOutput = parts[1];
                     lastDetailedOutput = parts[2];
-                    if (resultBox) resultBox.innerHTML = currentViewMode === 1 ? lastDetailedOutput : lastCompactOutput;
-
+                    let isDetailedMode = document.getElementById('btnDetailed').classList.contains('active');
+                    if (resultBox) resultBox.innerHTML = isDetailedMode ? lastDetailedOutput : lastCompactOutput;
                     // --- AUTO-SCROLL TO RESULTS ON MOBILE ---
                     if (window.innerWidth <= 1050 && summaryBox) {
                         summaryBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
