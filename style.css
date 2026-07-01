@@ -34,67 +34,62 @@ body {
 }
 
 /* --- NAVBAR STYLES --- */
-.navbar { 
-    background: var(--panel-bg); 
-    padding: 20px 50px; 
-    display: flex; 
-    align-items: center; 
-    border-bottom: 1px solid var(--border); 
-    transition: 0.3s; 
-    position: relative;    
-    justify-content: center; /* Centers the .nav-links */
+.navbar {
+    background: var(--panel-bg);
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Spreads items Left, Center, Right */
+    border-bottom: 1px solid var(--border);
+    transition: 0.3s;
 }
 
-/* New rule to lock the logo to the left */
 .logo {
-    position: absolute;
-    left: 30px;
-    top: 50%;
-    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
 }
 
-.nav-logo { 
-    max-height: 60px; 
-    width: auto; 
-    object-fit: contain; 
-    display: block; 
-    cursor: pointer; 
+.nav-logo {
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    cursor: pointer;
 }
 
-.nav-links { 
-    display: flex; 
-    align-items: center; 
-    gap: 20px; 
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.nav-links a { 
-    text-decoration: none; 
-    color: var(--text); 
-    font-weight: 500; 
-    transition: color 0.2s; 
+.nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 500;
+    transition: color 0.2s;
 }
 
-.nav-links a.active { 
-    color: var(--primary); 
-    border-bottom: 2px solid var(--primary); 
-    padding-bottom: 5px; 
+.nav-links a.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 5px;
 }
 
-/* Updated rule to lock the theme button to the right */
-.theme-btn { 
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--bg); 
-    color: var(--text); 
-    border: 1px solid var(--border); 
-    font-size: 0.9rem; 
-    font-weight: bold; 
-    cursor: pointer; 
-    transition: 0.3s; 
-    padding: 8px 12px; 
-    border-radius: 6px; 
+.theme-btn {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.theme-btn:hover {
+    background: var(--border);
 }
 
 .theme-btn:hover { 
@@ -524,39 +519,29 @@ body.dark-mode .total-row {
 
 /* MOBILE RESPONSIVENESS FIXES       -*/
 
-@media (max-width: 960px) {
+@media (max-width: 1050px) {
     .main-container {
         flex-direction: column;
         padding: 15px;
+        gap: 20px;
     }
 
     .left-panel {
-        flex: 1 1 auto;
+        flex: none;
+        width: 100%;
+    }
+
+    .right-panel {
+        flex: none;
         width: 100%;
     }
 
     .navbar {
         flex-direction: column;
-        padding: 15px;
         gap: 15px;
+        padding: 20px 15px;
     }
 
-    .logo, .theme-btn {
-        position: relative;
-        left: auto;
-        right: auto;
-        top: auto;
-        transform: none;
-    }
-
-    .results-area {
-        overflow-x: auto;
-        padding: 15px;
-        width: 100%;
-    }
-}
-
-@media (max-width: 600px) {
     .input-grid, .manual-add-grid {
         grid-template-columns: 1fr;
     }
@@ -565,19 +550,23 @@ body.dark-mode .total-row {
         grid-column: span 1;
     }
 
-    .action-buttons-row {
-        flex-direction: column;
-    }
-
-    .action-btn {
-        width: 100%;
-    }
-
-    .content-page {
-        padding: 20px;
+    .results-area, .detailed-block {
+        overflow-x: auto;
     }
 
     .summary-bar {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .summary-bar {
         grid-template-columns: 1fr;
+    }
+    .action-buttons-row {
+        flex-direction: column;
+    }
+    .action-btn {
+        width: 100%;
     }
 }
