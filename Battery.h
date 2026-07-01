@@ -3,7 +3,8 @@
 
 #include <string>
 #include <iostream>
-#include <format>
+#include <sstream>
+#include <iomanip>
 
 // Represents a single battery cell.
 class Battery {
@@ -51,11 +52,16 @@ private:
     double internalResistance; // Internal resistance in milliohms (mΩ).
 
     // Returns formatted string with battery info.
+    // Use ostream formatting (std::ostringstream) instead of std::format to
+    // avoid requiring C++20 <format> support in all toolchains / language servers.
     std::string Status() const {
-        return std::format(
-            "{:<17} | {:<17} | {:<24.2f} | {:<17} | {} ",
-            id, capacity, internalResistance, manufacturer, condition
-        );
+        std::ostringstream oss;
+        oss << std::left << std::setw(17) << id << " | ";
+        oss << std::left << std::setw(17) << capacity << " | ";
+        oss << std::left << std::setw(24) << std::fixed << std::setprecision(2) << internalResistance << " | ";
+        oss << std::left << std::setw(17) << manufacturer << " | ";
+        oss << condition;
+        return oss.str();
     }
 };
 

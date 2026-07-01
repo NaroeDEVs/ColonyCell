@@ -6,7 +6,9 @@
 #include "BatteryInventory.h"
 #include "Battery.h"
 #include "ParallelGroup.h"
-#include "limits.h"
+#include <limits>
+#include <climits>
+#include <cstdint>
 
 // Represent whole pack of parallel groups
 class PackManager {
