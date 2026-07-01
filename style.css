@@ -559,7 +559,7 @@ body.dark-mode .total-row {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 650px) {
     .summary-bar {
         grid-template-columns: 1fr;
     }
@@ -568,5 +568,25 @@ body.dark-mode .total-row {
     }
     .action-btn {
         width: 100%;
+    }
+
+    .styled-table th, .styled-table td {
+        padding: 6px 4px;
+        font-size: 0.75rem;
+        word-break: break-word;
+    }
+
+    .detailed-block {
+        padding: 12px;
+    }
+
+    .detailed-block h4 {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .block-stats {
+        font-size: 0.8rem;
+        padding: 8px;
     }
 }

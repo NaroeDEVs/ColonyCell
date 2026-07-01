@@ -261,17 +261,23 @@ if (runBtn) {
         });
 
         if (summaryBox) summaryBox.innerHTML = "<div class='meter-box'><strong>Calculating...</strong></div>";
-        
+
         setTimeout(() => {
             try {
                 let result = Module.OptimizePack(csvString, series, parallel, wCap, wRes, nomVolt, maxVolt);
                 let parts = result.split("|||");
-                
+
                 if (parts.length === 3) {
                     if (summaryBox) summaryBox.innerHTML = parts[0];
                     lastCompactOutput = parts[1];
                     lastDetailedOutput = parts[2];
                     if (resultBox) resultBox.innerHTML = currentViewMode === 1 ? lastDetailedOutput : lastCompactOutput;
+
+                    // --- AUTO-SCROLL TO RESULTS ON MOBILE ---
+                    if (window.innerWidth <= 1050 && summaryBox) {
+                        summaryBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+
                 } else {
                     let errorMessage = parts.length > 1 ? parts[1] : parts[0];
                     if (summaryBox) summaryBox.innerHTML = "<div class='meter-box'><strong style='color:red'>" + errorMessage + "</strong></div>";
