@@ -4,7 +4,7 @@
 #include "PackManager.h"
 #include "DataHandler.h"
 
-std::string OptimizePack(std::string csvData, int series, int parallel, double wCap, double wRes, double nomV, double maxV) {
+std::string OptimizePack(const std::string & csvData, int series, int parallel, double wCap, double wRes, double nomV, double maxV) {
     BatteryInventory AllBateries;
     DataHandler dataHandler;
 
