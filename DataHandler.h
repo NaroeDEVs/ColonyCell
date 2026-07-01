@@ -95,7 +95,7 @@ public:
         out << "<div class='detailed-grid'>";
         for (int i = 0; i < series; i++) {
             out << "<div class='detailed-block'>\n<h4>Parallel Group " << (i + 1) << "</h4>\n";
-            out << "<table class='styled-table'>\n<thead>\n<tr><th>ID</th><th>Capacity</th><th>Resistance</th><th>Manufacturer</th><th>Condition</th></tr>\n</thead>\n<tbody>\n";
+            out << "<table class='styled-table'>\n<thead>\n<tr><th> ID </th><th>Capacity</th><th>Resistance</th><th>Manufacturer</th><th>Condition</th></tr>\n</thead>\n<tbody>\n";
             for (int j = 0; j < parallel; j++) {
                 Battery b = packManager.GetCell(i, j);
                 out << "<tr><td>" << b.GetId() << "</td><td>" << b.GetCapacity() << " mAh</td><td>" << FormatDouble(b.GetResistance()) << " m&Omega;</td><td>" << b.GetManufacturer() << "</td><td>" << b.GetCondition() << "</td></tr>\n";
